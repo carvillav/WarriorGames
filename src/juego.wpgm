@@ -1,11 +1,7 @@
 import wollok.game.*
-import pepita.*
+import pantalla.*
+
 
 program juego {
-	
-	game.title("Juego Base")
-	game.addVisual(pepita)
-	game.addVisual(nombrePepita)
-	game.start()
-	
+	pantalla.iniciar()
 }
