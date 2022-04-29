@@ -7,3 +7,10 @@ object pepita {
 	method image() = "pepita.png"
 
 }
+
+object nombrePepita {
+	
+	method position() = game.center()
+	
+	method text() = "¡Soy pepita!"
+}

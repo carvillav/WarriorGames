@@ -4,5 +4,6 @@ import pepita.*
 program juego {
 	game.title("Juego Base")
 	game.addVisual(pepita)
+	game.addVisual(nombrePepita)
 	game.start()
 }
