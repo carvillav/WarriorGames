@@ -1,22 +1,24 @@
 import wollok.game.*
-import warrior.*
-import enemy.*
+import guerrero.*
+import enemigo.*
 import cartel.*
+import tableroTiempo.*
 
 object pantalla {
 	
 	const alto = 18
 	const ancho = 35
+	const tiempoReloj = 180000
 	
-	const boss = new GirarEnSuLugar(image = "dragonNegro0.png", position = game.at(25,11), power = 10000)
+	const boss = new GirarEnSuLugar(image = "dragonNegro0.png", position = game.at(25,11), power = 13000)
 	const enanoHechicero = new MoverseEnVertical(image = "enanoHechicero.png", position = game.at(1,15), posicionFija = game.at(1,15))
 	const ladronZombie = new MoverseAleatoriamente(image = "ladronZombie.png", position = game.at(28,3))
 	const basilisco = new MoverseEnHorizontal(image = "basilisco.png", position = game.at(19,9))
-	const esqueleto = new Enemy(image= "esqueleto.png",  position = game.at(13,4))
+	const esqueleto = new Enemigo(image= "esqueleto.png",  position = game.at(13,4))
 	
-	const warrior = new Warrior(position = game.at(3,5), poder = 1000, estoyAgregado = false)
+	const warrior = new Guerrero(position = game.at(3,5), poder = 1000, estoyAgregado = false)
 	
-	const textoPoderGuerrero = new Cartel(personaje = warrior, position = game.origin())
+	const textoPoderGuerrero = new Cartel(personaje = warrior, position = game.origin())		
 	
 	method iniciar(){
 		
@@ -24,19 +26,21 @@ object pantalla {
 		self.agregarPesonajesJuego()
 		self.desplazamiento()
 		
-		game.onCollideDo(warrior,{algo => 
-			algo.coliciona(warrior)
+		game.onCollideDo(warrior,{algo => algo.colisiona(warrior)
 			
-			if(warrior.estoyAgregado())game.say(warrior, "¡Uno Menos!") 
-			
-			if(warrior.poder() <= 10000){
-				if(warrior.estoyAgregado()) game.say(boss, "¡Humano, eres debil!")
+			if(warrior.poder() < 13000){
+				self.emitirMensaje(warrior, boss, "¡Humano, eres debil!")
 			}else{
-				game.say(boss, "¡Al fin, un digno oponente!")
+				self.emitirMensaje(warrior, boss, "¡Al fin, un digno oponente!")
 			}
 		})
 		
-		boss.moverse()
+		if(warrior.estoyAgregado()) boss.moverse()
+		
+		const tiempo = new Tiempo(tiempoTotal = tiempoReloj, frecuencia = 1)
+		const posicionReloj = game.at((ancho/2) - 1, (alto/2) - 1)
+		generarNumerosVisibles.generarDigitos(tiempoReloj / 1000, tiempo, posicionReloj)
+		tiempo.empezar()
 		game.start()
 	}
 	
@@ -91,6 +95,10 @@ object pantalla {
 		game.removeVisual(ladronZombie)
 		game.removeVisual(basilisco)
 		game.removeVisual(esqueleto)
+	}
+	
+	method emitirMensaje(encadenador, emite, mensaje){ 
+		if(encadenador.estoyAgregado()) game.say(emite, mensaje)
 	}
 	
 }

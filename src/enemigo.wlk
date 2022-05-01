@@ -1,14 +1,15 @@
 import wollok.game.*
-import warrior.*
+import guerrero.*
 import pantalla.*
 
-class Enemy{
+class Enemigo{
 	
 	var property image = null
 	var property position = null
 	var cantidadDesaparecidas = 0
 	
-	method coliciona(alguien){
+	method colisiona(alguien){
+		game.say(alguien, "¡Uno Menos!") 
 		game.removeVisual(self)
 		cantidadDesaparecidas++
 		alguien.aumentaPoder(cantidadDesaparecidas)
@@ -18,7 +19,7 @@ class Enemy{
 	
 }
 
-class MoverseEnVertical inherits Enemy {
+class MoverseEnVertical inherits Enemigo {
 	
 	const property posicionFija
 	
@@ -28,7 +29,7 @@ class MoverseEnVertical inherits Enemy {
 	}
 }
 
-class MoverseAleatoriamente inherits Enemy {
+class MoverseAleatoriamente inherits Enemigo {
 	
 	method moverse(){
 		const x = (-5..30).anyOne()
@@ -37,7 +38,7 @@ class MoverseAleatoriamente inherits Enemy {
     }
 }
 
-class MoverseEnHorizontal inherits Enemy {
+class MoverseEnHorizontal inherits Enemigo {
 	
 	var moverseALaIzquierda = true
 	
@@ -62,7 +63,7 @@ class MoverseEnHorizontal inherits Enemy {
 	}
 }
 
-class GirarEnSuLugar inherits Enemy {
+class GirarEnSuLugar inherits Enemigo {
 	
 	var nro = 0
 	var property power
@@ -74,10 +75,12 @@ class GirarEnSuLugar inherits Enemy {
 		})
 	}
 	
-	override method coliciona(alguien){
-		if(power < alguien.poder()){
-			game.removeVisual(self)
+	override method colisiona(alguien){
+		if(power <= alguien.poder()){
+			alguien.quitar()
+			game.removeVisual(alguien)
 			game.addVisual(victory)
+			game.removeVisual(self)
 		}else{
 			pantalla.eliminarPersonajesDelJuego()
 			game.addVisual(lose)

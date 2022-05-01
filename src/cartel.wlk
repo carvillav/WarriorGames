@@ -6,6 +6,6 @@ class Cartel {
 	const property position
 	
 	method text() = "        Power: " + personaje.poder().toString()
-	method colisiona(){}
+	method colisiona(algo){}
 	
 }

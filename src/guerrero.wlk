@@ -1,15 +1,15 @@
 import wollok.game.*
 
-class Warrior {
+class Guerrero {
 	var property position = null
 	var property poder = 0
 	var property estoyAgregado
 	
 	method image() {
-		if(poder > 5000 && poder <= 10000){
+		if(poder >= 7000 && poder < 13000){
 			return "guerreroNegro.png"
 		}
-		if(poder > 10000){
+		if(poder >= 13000){
 			return "guerreroFinal.png"
 		}
 		return "guerreroPrincipal.png"
