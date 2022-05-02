@@ -23,11 +23,7 @@ import personaje.*
 	const imagenEscenario = new Fondo(image = "suelo.jpg")
 	
 	//Niveles
-	const escenario = new Escenario(
-		personajes = [warrior, boss, enanoHechicero, ladronZombie, basilisco, esqueleto],
-		image = imagenEscenario,
-		tiempoReloj = 180000
-	)
+	const escenario = new Escenario(personajes = [warrior, boss, enanoHechicero, ladronZombie, basilisco, esqueleto],image = imagenEscenario,tiempoReloj = 180000)
 	
 	//Pantalla
 	const pantallaJuego = new Pantalla(alto = 18, ancho = 35, position = game.center(), titulo = "Warriors", image = "fondoNegro.jpg", escenarioPrincipal = escenario)
