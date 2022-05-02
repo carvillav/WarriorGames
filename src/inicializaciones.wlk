@@ -4,6 +4,7 @@ import guerrero.*
 import cartel.*
 import pantalla.*
 import escenario.*
+import personaje.*
 
 	//Enemigos
 	const boss = new GirarEnSuLugar(image = "dragonNegro0.png", position = game.at(25,11), power = 13000)

@@ -1,8 +1,4 @@
 import wollok.game.*
-import guerrero.*
-import enemigo.*
-import cartel.*
-import tableroTiempo.*
 import inicializaciones.*
 
 class Pantalla {
