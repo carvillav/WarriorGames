@@ -52,6 +52,17 @@ class Pantalla {
 		
 		escenarioPrincipal.iniciar()
 	}
+	
+	method dentroDeLaPantalla(posicion){
+		var nuevaPosicion = posicion
+		//nuevaPosicion.x(posicion.x().min(ancho-1).max(0))
+		//nuevaPosicion.y(posicion.y().min(alto-1).max(0))
+		if(posicion.x() >= ancho) nuevaPosicion = game.at(ancho-1, nuevaPosicion.y())
+		if(posicion.x() < 0) nuevaPosicion = game.at(0, nuevaPosicion.y())
+		if(posicion.y() >= alto) nuevaPosicion = game.at(nuevaPosicion.x(), alto-1)
+		if(posicion.y() < 0) nuevaPosicion = game.at(nuevaPosicion.x(), 0)
+		return nuevaPosicion
+	}
 }
 
 

@@ -2,6 +2,7 @@ import wollok.game.*
 import guerrero.*
 import pantalla.*
 import personaje.*
+import inicializaciones.*
 
 class Enemigo inherits Personaje {
 	
@@ -44,7 +45,7 @@ class MoverseAleatoriamente inherits Enemigo {
 	override method moverse(){
 		const x = (-5..30).anyOne()
     	const y = (-5..15).anyOne()
-    	//position = pantalla.dentroDeLaPantalla(game.at(x,y))
+    	position = pantallaJuego.dentroDeLaPantalla(game.at(x,y))
     }
     
     override method emitirMensaje(mensaje){}
@@ -100,7 +101,7 @@ class GirarEnSuLugar inherits Enemigo {
 			game.addVisual(victory)
 			game.removeVisual(self)
 		}else{
-			//pantalla.eliminarPersonajesDelJuego()
+			pantallaJuego.eliminarPersonajesDelJuego()
 			game.addVisual(lose)
 		}
 	}
