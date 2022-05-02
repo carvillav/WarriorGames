@@ -1,9 +1,9 @@
 import wollok.game.*
+import personaje.*
 
-class Guerrero {
+class Guerrero inherits Personaje{
 	var property position = null
 	var property poder = 0
-	var property estoyAgregado
 	
 	method image() {
 		if(poder >= 7000 && poder < 13000){
@@ -13,6 +13,24 @@ class Guerrero {
 			return "guerreroFinal.png"
 		}
 		return "guerreroPrincipal.png"
+	}
+	
+	override method desplazarse(){
+		keyboard.left().onPressDo({self.moverALaIzquierda()})
+		keyboard.right().onPressDo({self.moverALaDerecha()})
+		keyboard.up().onPressDo({self.moverArriba()})
+		keyboard.down().onPressDo({self.moverAbajo()})
+	}
+	
+	method colisionaConEnemigo(){
+		game.onCollideDo(self,{algo => algo.colisiona(self)
+			
+			if(self.poder() < 13000){
+				algo.emitirMensaje("¡Humano, eres debil!")
+			}else{
+				algo.emitirMensaje("¡Al fin, un digno oponente!")
+			}
+		})
 	}
 	
 	method moverALaDerecha(){
@@ -32,6 +50,4 @@ class Guerrero {
 		poder += 500*cantColisiones
 	}
 	
-	method agregar(){estoyAgregado = true}
-	method quitar() {estoyAgregado = false} 
 }

@@ -1,15 +1,17 @@
 import wollok.game.*
 import guerrero.*
 import pantalla.*
+import personaje.*
 
-class Enemigo{
+class Enemigo inherits Personaje {
 	
 	var property image = null
 	var property position = null
 	var cantidadDesaparecidas = 0
 	
 	method colisiona(alguien){
-		game.say(alguien, "¡Uno Menos!") 
+		
+		alguien.emitirMensaje("¡Uno Menos!") 
 		game.removeVisual(self)
 		cantidadDesaparecidas++
 		alguien.aumentaPoder(cantidadDesaparecidas)
@@ -17,32 +19,46 @@ class Enemigo{
 		
 	}
 	
+	override method desplazarse(){
+		game.onTick(2000, self.identity().toString(), {self.moverse()})
+	}
+	
+	method moverse(){}
+	
 }
 
 class MoverseEnVertical inherits Enemigo {
 	
 	const property posicionFija
 	
-	method moverse(){
+	override method moverse(){
 		2.times({x => position = position.down(1)})	
 		if(position.y() < 0) position = posicionFija
 	}
+	
+	override method emitirMensaje(mensaje){}
 }
 
 class MoverseAleatoriamente inherits Enemigo {
 	
-	method moverse(){
+	override method moverse(){
 		const x = (-5..30).anyOne()
     	const y = (-5..15).anyOne()
-    	position = pantalla.dentroDeLaPantalla(game.at(x,y))
+    	//position = pantalla.dentroDeLaPantalla(game.at(x,y))
     }
+    
+    override method emitirMensaje(mensaje){}
 }
 
 class MoverseEnHorizontal inherits Enemigo {
 	
 	var moverseALaIzquierda = true
 	
-	method moverse(){
+	override method desplazarse(){
+		game.onTick(500, self.identity().toString(), {self.moverse()})
+	}
+	
+	override method moverse(){
 		if(moverseALaIzquierda){
 			self.moverseIzquierda()
 		}else{
@@ -61,6 +77,8 @@ class MoverseEnHorizontal inherits Enemigo {
 		2.times({b => position = position.right(1)})
 		if(position.x() == game.center().x()) moverseALaIzquierda = true
 	}
+	
+	override method emitirMensaje(mensaje){}
 }
 
 class GirarEnSuLugar inherits Enemigo {
@@ -68,7 +86,7 @@ class GirarEnSuLugar inherits Enemigo {
 	var nro = 0
 	var property power
 	
-	method moverse(){
+	override method desplazarse(){
 		game.onTick(5000, "dragonSeMueve", {
 			nro = (nro + 1) % 2
 			image = "dragonNegro"+ nro.toString() + ".png"
@@ -82,10 +100,11 @@ class GirarEnSuLugar inherits Enemigo {
 			game.addVisual(victory)
 			game.removeVisual(self)
 		}else{
-			pantalla.eliminarPersonajesDelJuego()
+			//pantalla.eliminarPersonajesDelJuego()
 			game.addVisual(lose)
 		}
 	}
+	
 }
 
 

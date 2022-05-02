@@ -3,22 +3,88 @@ import guerrero.*
 import enemigo.*
 import cartel.*
 import tableroTiempo.*
+import inicializaciones.*
 
-object pantalla {
+class Pantalla {
+	const property alto
+	const property ancho
+	const property image
+	const property position
+	const property titulo
+	const property escenarioPrincipal
+	const sonidoIntro = sonido.sonido("musica/intro")
+	
+	method mostrarPantallaInicial(){
+		
+		self.configurarPantalla()
+		self. mostrar(pantallaInicial)
+		
+		//reproduce automáticamente el sonido
+        game.schedule(1, {=> sonidoIntro.play()})
+
+        //entra en un loop el sonido después de haber terminado
+        sonidoIntro.shouldLoop(true)
+		
+		//Cerrar el juego
+		self.cerrarPantalla()
+		
+		keyboard.enter().onPressDo{self.mostrarOpciones()}
+	}
+	
+	method configurarPantalla(){
+		game.height(alto)
+		game.width(ancho)
+		game.title(titulo)
+		game.boardGround(image)//"suelo.gif"
+	}
+	
+	method mostrar(algo) {game.addVisual(algo)}
+	
+	method cerrarPantalla() {keyboard.s().onPressDo{game.stop()}}
+	
+	method mostrarOpciones(){
+		
+		game.clear()
+		self.mostrar(pantallaModoDeJuego)
+		self.cerrarPantalla()
+		keyboard.num1().onPressDo{self.iniciarJuego()}
+	}
+	
+	method iniciarJuego(){
+		game.clear()
+		if(escenarioPrincipal === escenario) sonidoIntro.stop()
+		
+		escenarioPrincipal.iniciar()
+	}
+}
+
+
+//
+class Fondo {
+	
+	var property image 
+	var property position = game.origin()
+
+}
+
+//SONIDO
+object sonido {
+
+    method sonido(audio) = game.sound(audio + ".mp3")
+
+    method reproducir(audio) = self.sonido(audio).play()
+    
+    method parar(audio) = self.sonido(audio).stop()
+
+}
+
+/*object pantalla {
 	
 	const alto = 18
 	const ancho = 35
 	const tiempoReloj = 180000
 	
-	const boss = new GirarEnSuLugar(image = "dragonNegro0.png", position = game.at(25,11), power = 13000)
-	const enanoHechicero = new MoverseEnVertical(image = "enanoHechicero.png", position = game.at(1,15), posicionFija = game.at(1,15))
-	const ladronZombie = new MoverseAleatoriamente(image = "ladronZombie.png", position = game.at(28,3))
-	const basilisco = new MoverseEnHorizontal(image = "basilisco.png", position = game.at(19,9))
-	const esqueleto = new Enemigo(image= "esqueleto.png",  position = game.at(13,4))
-	
-	const warrior = new Guerrero(position = game.at(3,5), poder = 1000, estoyAgregado = false)
-	
-	const textoPoderGuerrero = new Cartel(personaje = warrior, position = game.origin())		
+		
 	
 	method iniciar(){
 		
@@ -26,21 +92,11 @@ object pantalla {
 		self.agregarPesonajesJuego()
 		self.desplazamiento()
 		
-		game.onCollideDo(warrior,{algo => algo.colisiona(warrior)
-			
-			if(warrior.poder() < 13000){
-				self.emitirMensaje(warrior, boss, "¡Humano, eres debil!")
-			}else{
-				self.emitirMensaje(warrior, boss, "¡Al fin, un digno oponente!")
-			}
-		})
 		
-		if(warrior.estoyAgregado()) boss.moverse()
 		
-		const tiempo = new Tiempo(tiempoTotal = tiempoReloj, frecuencia = 1)
-		const posicionReloj = game.at((ancho/2) - 1, (alto/2) - 1)
-		generarNumerosVisibles.generarDigitos(tiempoReloj / 1000, tiempo, posicionReloj)
-		tiempo.empezar()
+		
+		
+		
 		game.start()
 	}
 	
@@ -62,18 +118,7 @@ object pantalla {
 		return nuevaPosicion
 	}
 	
-	method desplazamiento(){
-		keyboard.left().onPressDo({warrior.moverALaIzquierda()})
-		keyboard.right().onPressDo({warrior.moverALaDerecha()})
-		keyboard.up().onPressDo({warrior.moverArriba()})
-		keyboard.down().onPressDo({warrior.moverAbajo()})
-		
-		game.onTick(2000, "movimientoLadronZombie", {ladronZombie.moverse()})
-		game.onTick(2000, "movimientoEnanoHechicero", {enanoHechicero.moverse()})
-		game.onTick(500, "movimientoBasilisco", {basilisco.moverse()})
-		
-		
-	}
+	
 	
 	method agregarPesonajesJuego(){
 		game.addVisual(warrior)
@@ -101,4 +146,4 @@ object pantalla {
 		if(encadenador.estoyAgregado()) game.say(emite, mensaje)
 	}
 	
-}
+}*/
