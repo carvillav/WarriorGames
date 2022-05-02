@@ -1,6 +1,9 @@
 import wollok.game.*
-import inicializaciones.*
 import tableroTiempo.*
+import personaje.*
+import guerrero.*
+import enemigo.*
+import fondo.*
 
 class Escenario {
 	
@@ -54,3 +57,7 @@ class Escenario {
 	method eliminar(algo) {game.removeVisual(algo)}
 	
 }
+
+	//Niveles
+	const escenario = new Escenario(personajes = [warrior, boss, enanoHechicero, ladronZombie, basilisco, esqueleto],image = imagenEscenario,tiempoReloj = 180000)
+	

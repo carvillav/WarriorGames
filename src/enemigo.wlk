@@ -2,7 +2,6 @@ import wollok.game.*
 import guerrero.*
 import pantalla.*
 import personaje.*
-import inicializaciones.*
 
 class Enemigo inherits Personaje {
 	
@@ -118,3 +117,10 @@ object lose {
 	method position() = game.at(9,3)
 	method image() = "game_over.png"
 }
+
+	//Enemigos
+	const boss = new GirarEnSuLugar(image = "dragonNegro0.png", position = game.at(25,11), power = 13000)
+	const enanoHechicero = new MoverseEnVertical(image = "enanoHechicero.png", position = game.at(1,15), posicionFija = game.at(1,15))
+	const ladronZombie = new MoverseAleatoriamente(image = "ladronZombie.png", position = game.at(28,3))
+	const basilisco = new MoverseEnHorizontal(image = "basilisco.png", position = game.at(19,9))
+	const esqueleto = new Enemigo(image= "esqueleto.png",  position = game.at(13,4))

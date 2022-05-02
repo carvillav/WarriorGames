@@ -1,8 +1,8 @@
 import wollok.game.*
-import inicializaciones.*
-
+import pantalla.*
 
 program juego {
+	
 	pantallaJuego.mostrarPantallaInicial()
 	game.start()
 }

@@ -1,5 +1,6 @@
 import wollok.game.*
-import inicializaciones.*
+import escenario.*
+import fondo.*
 
 class Pantalla {
 	const property alto
@@ -31,7 +32,7 @@ class Pantalla {
 		game.height(alto)
 		game.width(ancho)
 		game.title(titulo)
-		game.boardGround(image)//"suelo.gif"
+		game.boardGround(image)
 	}
 	
 	method mostrar(algo) {game.addVisual(algo)}
@@ -66,14 +67,6 @@ class Pantalla {
 }
 
 
-//
-class Fondo {
-	
-	var property image 
-	var property position = game.origin()
-
-}
-
 //SONIDO
 object sonido {
 
@@ -84,3 +77,6 @@ object sonido {
     method parar(audio) = self.sonido(audio).stop()
 
 }
+	
+	//Pantalla
+	const pantallaJuego = new Pantalla(alto = 18, ancho = 35, position = game.center(), titulo = "Warriors", image = "fondoNegro.jpg", escenarioPrincipal = escenario)

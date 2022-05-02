@@ -1,5 +1,6 @@
 import wollok.game.*
 import personaje.*
+import cartel.*
 
 class Guerrero inherits Personaje{
 	var property position = null
@@ -22,7 +23,7 @@ class Guerrero inherits Personaje{
 		keyboard.down().onPressDo({self.moverAbajo()})
 	}
 	
-	method colisionaConEnemigo(){
+	override method colisionaConEnemigo(){
 		game.onCollideDo(self,{algo => algo.colisiona(self)
 			
 			if(self.poder() < 13000){
@@ -51,3 +52,7 @@ class Guerrero inherits Personaje{
 	}
 	
 }
+
+	//Guerrero
+	const warrior = new Guerrero(position = game.at(3,5), poder = 1000, estoyAgregado = false)
+	const textoPoderGuerrero = new Cartel(personaje = warrior, position = game.origin())
