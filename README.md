@@ -8,7 +8,7 @@
 
 ## Capturas
 
-(agregar)
+![Image text](https://github.com/carvillav/WarriorGames/blob/master/imagenDelJuego.jpg)
 
 ## Reglas de Juego / Instrucciones
 
