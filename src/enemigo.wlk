@@ -3,6 +3,7 @@ import guerrero.*
 import pantalla.*
 import personaje.*
 import escenario.*
+import fondo.*
 
 class Enemigo inherits Personaje {
 	
@@ -48,10 +49,12 @@ class MoverseEnVertical inherits Enemigo {
 
 class MoverseAleatoriamente inherits Enemigo {
 	
+	const unaPantalla
+	
 	override method moverse(){
 		const x = (-5..30).anyOne()
     	const y = (-5..15).anyOne()
-    	position = pantallaJuego.dentroDeLaPantalla(game.at(x,y))
+    	position = unaPantalla.dentroDeLaPantalla(game.at(x,y))
     }
     
     override method emitirMensaje(mensaje){}
@@ -92,6 +95,9 @@ class GirarEnSuLugar inherits Enemigo {
 	
 	var nro = 0
 	var property power
+	const unEscenario
+	const victory
+	const lose
 	
 	override method desplazarse(){
 		game.onTick(5000, "dragonSeMueve", {
@@ -107,27 +113,16 @@ class GirarEnSuLugar inherits Enemigo {
 			game.addVisual(victory)
 			game.removeVisual(self)
 		}else{
-			escenario.eliminarPersonajesDelJuego()
+			unEscenario.eliminarPersonajesDelJuego()
 			game.addVisual(lose)
 		}
 	}
 	
 }
 
-
-object victory {
-	method position() = game.at(11,5)
-	method image() = "you-win.png"
-}
-
-object lose {
-	method position() = game.at(9,3)
-	method image() = "game_over.png"
-}
-
 	//Enemigos
-	const boss = new GirarEnSuLugar(image = "dragonNegro0.png", position = game.at(25,11), power = 13000)
+	const boss = new GirarEnSuLugar(image = "dragonNegro0.png", position = game.at(25,11), power = 13000, unEscenario = escenario, victory = victoria, lose = derrota)
 	const enanoHechicero = new MoverseEnVertical(image = "enanoHechicero.png", position = game.at(1,15), posicionFija = game.at(1,15))
-	const ladronZombie = new MoverseAleatoriamente(image = "ladronZombie.png", position = game.at(28,3))
+	const ladronZombie = new MoverseAleatoriamente(image = "ladronZombie.png", position = game.at(28,3), unaPantalla = pantallaJuego)
 	const basilisco = new MoverseEnHorizontal(image = "basilisco.png", position = game.at(19,9))
 	const esqueleto = new QuedarseQuieto(image= "esqueleto.png",  position = game.at(13,4))

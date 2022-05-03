@@ -59,5 +59,5 @@ class Escenario {
 }
 
 	//Niveles
-	const escenario = new Escenario(personajes = [warrior, boss, enanoHechicero, ladronZombie, basilisco, esqueleto],image = imagenEscenario,tiempoReloj = 10000)
+	const escenario = new Escenario(personajes = [warrior, boss, enanoHechicero, ladronZombie, basilisco, esqueleto],image = imagenEscenario,tiempoReloj = 20000)
 	
