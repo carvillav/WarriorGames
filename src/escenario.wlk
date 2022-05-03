@@ -38,7 +38,7 @@ class Escenario {
 	
 	method reloj(){
 		const tiempo = new Tiempo(tiempoTotal = tiempoReloj, frecuencia = 1)
-		const posicionReloj = game.at(10, 15)
+		const posicionReloj = game.at(17, 17)
 		generarNumerosVisibles.generarDigitos(tiempoReloj / 1000, tiempo, posicionReloj)
 		tiempo.empezar()
 	}
@@ -59,5 +59,5 @@ class Escenario {
 }
 
 	//Niveles
-	const escenario = new Escenario(personajes = [warrior, boss, enanoHechicero, ladronZombie, basilisco, esqueleto],image = imagenEscenario,tiempoReloj = 180000)
+	const escenario = new Escenario(personajes = [warrior, boss, enanoHechicero, ladronZombie, basilisco, esqueleto],image = imagenEscenario,tiempoReloj = 10000)
 	

@@ -24,14 +24,7 @@ class Guerrero inherits Personaje{
 	}
 	
 	override method colisionaConEnemigo(){
-		game.onCollideDo(self,{algo => algo.colisiona(self)
-			
-			if(self.poder() < 13000){
-				algo.emitirMensaje("¡Humano, eres debil!")
-			}else{
-				algo.emitirMensaje("¡Al fin, un digno oponente!")
-			}
-		})
+		game.onCollideDo(self,{algo => algo.colisiona(self)})
 	}
 	
 	method moverALaDerecha(){

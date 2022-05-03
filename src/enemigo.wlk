@@ -28,6 +28,12 @@ class Enemigo inherits Personaje {
 	
 }
 
+class QuedarseQuieto inherits Enemigo {
+	
+	override method emitirMensaje(mensaje){}
+	
+}
+
 class MoverseEnVertical inherits Enemigo {
 	
 	const property posicionFija
@@ -124,4 +130,4 @@ object lose {
 	const enanoHechicero = new MoverseEnVertical(image = "enanoHechicero.png", position = game.at(1,15), posicionFija = game.at(1,15))
 	const ladronZombie = new MoverseAleatoriamente(image = "ladronZombie.png", position = game.at(28,3))
 	const basilisco = new MoverseEnHorizontal(image = "basilisco.png", position = game.at(19,9))
-	const esqueleto = new Enemigo(image= "esqueleto.png",  position = game.at(13,4))
+	const esqueleto = new QuedarseQuieto(image= "esqueleto.png",  position = game.at(13,4))

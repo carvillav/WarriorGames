@@ -33,20 +33,22 @@ class Digito {
 	
 	method digitoCorrespondiente(){
 		
-		const numberAsString = numero.showingNumber().toString()
+		const numberAsString = numero.mostrarNumero().toString()
 		
 		return if (numberAsString.size() - 1 < posicionDigito)
-			"0"
+			"sinNumero"
 		else
 			numberAsString.charAt(posicionDigito)
 	}
 	
 	method image() = "numeros/"+self.digitoCorrespondiente()+".png"
+	
+	method colisiona(alguien){}
 }
 
 object generarNumerosVisibles{
-	method generarDigitos(maximumNumber,numberProvider,position){
+	method generarDigitos(maximumNumber,numero,position){
 		const cantidadDeDigitosParaElReloj = maximumNumber.toString().size()
-		cantidadDeDigitosParaElReloj.times({i => game.addVisual(new Digito(posicionDigito = i-1, numero = numberProvider, posicionBase = position))})
+		cantidadDeDigitosParaElReloj.times({i => game.addVisual(new Digito(posicionDigito = i-1, numero = numero, posicionBase = position))})
 	}
 }
