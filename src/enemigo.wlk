@@ -2,6 +2,7 @@ import wollok.game.*
 import guerrero.*
 import pantalla.*
 import personaje.*
+import escenario.*
 
 class Enemigo inherits Personaje {
 	
@@ -100,7 +101,7 @@ class GirarEnSuLugar inherits Enemigo {
 			game.addVisual(victory)
 			game.removeVisual(self)
 		}else{
-			pantallaJuego.eliminarPersonajesDelJuego()
+			escenario.eliminarPersonajesDelJuego()
 			game.addVisual(lose)
 		}
 	}
