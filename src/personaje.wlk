@@ -7,7 +7,7 @@ class Personaje {
 		method agregar(){estoyAgregado = true}
 		method quitar() {estoyAgregado = false}
 		method desplazarse(){}
-		method colisionaConEnemigo(){}
+		method colisionaConEnemigo(escenario){}
 		method emitirMensaje(mensaje){
 			if(self.estoyAgregado()) game.say(self, mensaje)
 		}

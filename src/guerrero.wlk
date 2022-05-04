@@ -1,10 +1,12 @@
 import wollok.game.*
 import personaje.*
 import cartel.*
+import pantalla.*
 
 class Guerrero inherits Personaje{
 	var property position = null
 	var property poder = 0
+	const property dimensionDePantallaEnJuego
 	
 	method image() {
 		if(poder >= 7000 && poder < 13000){
@@ -23,21 +25,21 @@ class Guerrero inherits Personaje{
 		keyboard.down().onPressDo({self.moverAbajo()})
 	}
 	
-	override method colisionaConEnemigo(){
-		game.onCollideDo(self,{algo => algo.colisiona(self)})
+	override method colisionaConEnemigo(escenario){
+		game.onCollideDo(self,{algo => algo.colisiona(self, escenario)})
 	}
 	
 	method moverALaDerecha(){
-		position = position.right(1)
+		if(position.x() < dimensionDePantallaEnJuego.anchoPantalla()-2) position = position.right(1)
 	}
 	method moverALaIzquierda(){
-		position = position.left(1)
+		if(position.x() > 0) position = position.left(1)
 	}
 	method moverArriba(){
-		position = position.up(1)
+		if(position.y() < dimensionDePantallaEnJuego.altoPantalla()-4) position = position.up(1)
 	}
 	method moverAbajo(){
-		position = position.down(1)
+		if(position.y() > 0) position = position.down(1)
 	}
 	
 	method aumentaPoder(cantColisiones){
@@ -47,5 +49,5 @@ class Guerrero inherits Personaje{
 }
 
 	//Guerrero
-	const warrior = new Guerrero(position = game.at(3,5), poder = 1000, estoyAgregado = false)
+	const warrior = new Guerrero(position = game.at(3,5), poder = 1000, estoyAgregado = false, dimensionDePantallaEnJuego = dimensionDeMiPantalla)
 	const textoPoderGuerrero = new Cartel(personaje = warrior, position = game.origin())

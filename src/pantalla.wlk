@@ -1,6 +1,8 @@
 import wollok.game.*
 import escenario.*
 import fondo.*
+import guerrero.*
+import enemigo.*
 
 class Pantalla {
 	const property alto
@@ -8,19 +10,25 @@ class Pantalla {
 	const property image
 	const property position
 	const property titulo
-	const property escenarioPrincipal
-	const sonidoIntro = sonido.sonido("musica/intro")
+	const property pantallaPortada
+	const property pantallaOpciones
+	const property pantallaJuego
+	const property pantallaDerrota 
+	const property sonidoIntro
+	const property sonidoDerrotaFinal
+	const property sonidoEscenarioJuego
+	const property listaPersonajes
 	
 	method mostrarPantallaInicial(){
 		
 		self.configurarPantalla()
-		self. mostrar(pantallaInicial)
+		self. mostrar(pantallaPortada)
 		
 		//reproduce automáticamente el sonido
-        game.schedule(1, {=> sonidoIntro.play()})
-
-        //entra en un loop el sonido después de haber terminado
-        sonidoIntro.shouldLoop(true)
+    	sonidoIntro.reproducirAutomaticamente()
+		
+		//entra en un loop el sonido después de haber terminado
+		sonidoIntro.reproducirSinParar()
 		
 		//Cerrar el juego
 		self.cerrarPantalla()
@@ -42,19 +50,32 @@ class Pantalla {
 	method mostrarOpciones(){
 		
 		game.clear()
-		self.mostrar(pantallaModoDeJuego)
+		self.mostrar(pantallaOpciones)
 		self.cerrarPantalla()
-		keyboard.num1().onPressDo{self.iniciarJuego()}
+		keyboard.num1().onPressDo{self.iniciarJuego(110000)}
+		keyboard.num2().onPressDo{self.iniciarJuego(70000)}
+		keyboard.num3().onPressDo{self.iniciarJuego(50000)}
 	}
 	
-	method iniciarJuego(){
-		game.clear()
-		if(escenarioPrincipal === escenario) sonidoIntro.stop()
+	method iniciarJuego(tiempo){
 		
-		escenarioPrincipal.iniciar()
+		game.clear()
+		
+		const escenario = new Escenario(personajes = listaPersonajes, 
+			image = pantallaJuego, 
+			tiempoReloj = tiempo, 
+			pantallaDerrota = pantallaDerrota,
+			sonidoAmbiente = sonidoEscenarioJuego,
+			musicaDerrota = sonidoDerrotaFinal
+		)
+	
+	 	sonidoIntro.detener()
+		
+		escenario.iniciar()
 	}
 	
 	method dentroDeLaPantalla(posicion){
+		
 		var nuevaPosicion = posicion
 		//nuevaPosicion.x(posicion.x().min(ancho-1).max(0))
 		//nuevaPosicion.y(posicion.y().min(alto-1).max(0))
@@ -77,6 +98,47 @@ object sonido {
     method parar(audio) = self.sonido(audio).stop()
 
 }
+
+class DimensionPantalla{
+	
+	const property anchoPantalla
+	const property altoPantalla
+}
+
+class Sonido {
+	
+	const property unSonido
+	
+	method reproducir() {unSonido.play()}
+	method reproducirAutomaticamente() {game.schedule(1, {=> self.reproducir()})}
+	method reproducirSinParar() = unSonido.shouldLoop(true)
+	method detener() {unSonido.stop()}
+	method bajarVolumen(cant) {unSonido.volume(cant)}
+}
+
+	//Sonidos
+	
+	const sonidoInicial = new Sonido(unSonido = sonido.sonido("musica/intro"))
+	const sonidoJuego = new Sonido(unSonido = sonido.sonido("musica/ambiente"))
+	const sonidoVictoria = new Sonido(unSonido = sonido.sonido("musica/victoria"))
+	const sonidoDerrota = new Sonido(unSonido = sonido.sonido("musica/derrota"))
 	
 	//Pantalla
-	const pantallaJuego = new Pantalla(alto = 18, ancho = 35, position = game.center(), titulo = "Warriors", image = "fondoNegro.jpg", escenarioPrincipal = escenario)
+	
+	const dimensionDeMiPantalla = new DimensionPantalla(anchoPantalla = 35, altoPantalla = 18)
+	
+	const pantallaJuego = new Pantalla(alto = dimensionDeMiPantalla.altoPantalla(), 
+		ancho = dimensionDeMiPantalla.anchoPantalla(), 
+		position = game.center(), 
+		titulo = "Warriors", 
+		image = "fondoNegro.jpg", 
+		listaPersonajes = [warrior, boss, enanoHechicero, ladronZombie, basilisco, esqueleto],
+		pantallaPortada = pantallaInicial, 
+		pantallaOpciones = pantallaModoDeJuego,
+		pantallaJuego = imagenEscenario,
+		pantallaDerrota = derrota,
+		sonidoIntro = sonidoInicial, 
+		sonidoDerrotaFinal = sonidoDerrota,
+		sonidoEscenarioJuego = sonidoJuego
+	)
+	

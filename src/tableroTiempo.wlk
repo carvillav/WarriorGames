@@ -5,6 +5,9 @@ class Tiempo {
 	var tiempoTotal //ms
 	var frecuencia // hs
 	var property contador = 0
+	const property mensajeDerrota
+	const property escenarioAsociado
+	const property musicaFinal
 	
 	method espaciamiento()=1000/frecuencia //ms
 	
@@ -13,7 +16,10 @@ class Tiempo {
 	method detener() = game.removeTickEvent(self.identity().toString())
 	
 	method onTick(){
-		if(self.tiempoRestante()<=0) self.detener()
+		if(self.tiempoRestante()<=0){
+			self.detener()
+			escenarioAsociado.mostrarPantallaResultadoDeLaPartida(mensajeDerrota, musicaFinal)
+		} 
 		contador+=1
 	}
 	

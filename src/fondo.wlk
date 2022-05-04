@@ -4,6 +4,15 @@ class Fondo {
 	
 	const property image 
 	const property position = game.origin()
+	
+	method colisiona(alguien){}
+	method eliminar() {}
+	method agregar(){}
+	method estoyAgregado(){}
+	method desplazarse(){}
+	method quitar(){}
+	method colisionaConEnemigo(algo){}
+	
 
 }
 

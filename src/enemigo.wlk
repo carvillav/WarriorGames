@@ -11,7 +11,7 @@ class Enemigo inherits Personaje {
 	var property position = null
 	var cantidadDesaparecidas = 0
 	
-	method colisiona(alguien){
+	method colisiona(alguien, escenario){
 		
 		alguien.emitirMensaje("¡Uno Menos!") 
 		game.removeVisual(self)
@@ -95,9 +95,10 @@ class GirarEnSuLugar inherits Enemigo {
 	
 	var nro = 0
 	var property power
-	const unEscenario
 	const victory
 	const lose
+	const sonidoVictory
+	const sonidoLose
 	
 	override method desplazarse(){
 		game.onTick(5000, "dragonSeMueve", {
@@ -106,22 +107,25 @@ class GirarEnSuLugar inherits Enemigo {
 		})
 	}
 	
-	override method colisiona(alguien){
+	override method colisiona(alguien, escenario){
 		if(power <= alguien.poder()){
-			alguien.quitar()
-			game.removeVisual(alguien)
-			game.addVisual(victory)
-			game.removeVisual(self)
+			escenario.mostrarPantallaResultadoDeLaPartida(victory, sonidoVictory)
 		}else{
-			unEscenario.eliminarPersonajesDelJuego()
-			game.addVisual(lose)
+			escenario.mostrarPantallaResultadoDeLaPartida(lose, sonidoLose)
 		}
 	}
-	
 }
 
 	//Enemigos
-	const boss = new GirarEnSuLugar(image = "dragonNegro0.png", position = game.at(25,11), power = 13000, unEscenario = escenario, victory = victoria, lose = derrota)
+	const boss = new GirarEnSuLugar(image = "dragonNegro0.png", 
+		position = game.at(25,11), 
+		power = 13000, 
+		victory = victoria, 
+		lose = derrota, 
+		sonidoVictory = sonidoVictoria, 
+		sonidoLose = sonidoDerrota
+	)
+	
 	const enanoHechicero = new MoverseEnVertical(image = "enanoHechicero.png", position = game.at(1,15), posicionFija = game.at(1,15))
 	const ladronZombie = new MoverseAleatoriamente(image = "ladronZombie.png", position = game.at(28,3), unaPantalla = pantallaJuego)
 	const basilisco = new MoverseEnHorizontal(image = "basilisco.png", position = game.at(19,9))
