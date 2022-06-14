@@ -1,0 +1,10 @@
+import wollok.game.*
+import instancia.*
+
+program iniciarJuego {
+
+	console.println('Iniciando videojuego...')
+	warriorsGame.mostrarPortada()
+	game.start()
+
+}

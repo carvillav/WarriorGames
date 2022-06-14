@@ -1,91 +1,46 @@
 import wollok.game.*
-import tableroTiempo.*
-import personaje.*
-import guerrero.*
-import enemigo.*
-import fondo.*
-import pantalla.*
 
 class Escenario {
 	
 	const personajes = []
-	const image
-	const tiempoReloj
-	const property pantallaDerrota
-	const property sonidoAmbiente
-	const property musicaDerrota
+	const fondo
+	const tiempoPartida
+	const numerosEnPartida
 	
-	method iniciar(){
+	method iniciar(tiempo){
 		
-		self.agregar(image)
-		self.agregarPersonajesAlJuego()
-		self.desplazamientoPersonajes()
-		self.colisiones()
-		self.reloj()
-		self.cerrarPantalla()
+		self.agregarElementoEscenario(fondo)
+		self.agregarPersonajesEnEscenario()
+		self.habilitarDesplazammientoPersonajes()
+		self.habilitarColisiones()
+		fondo.cerrarPantalla()
+		fondo.sonido().reproducirAutomaticamente()
+		fondo.sonido().reproducirSinParar()
+		fondo.sonido().bajarVolumen(0.5)
+		self.iniciarReloj(tiempo)
+	}
+	
+	method agregarElementoEscenario(algo) {game.addVisual(algo)}
+	
+	method eliminarElementoEscenario(algo) {game.removeVisual(algo)}
+	
+	method agregarPersonajesEnEscenario(){
 		
-		//reproduce automáticamente el sonido
-        sonidoAmbiente.reproducirAutomaticamente()
+		personajes.forEach({unPersonaje => 
+			self.agregarElementoEscenario(unPersonaje)
+			unPersonaje.habilitar()
+		})
+	}
+	
+	method habilitarDesplazammientoPersonajes() {personajes.forEach({unPersonaje => unPersonaje.moverse()})}
+	
+	method habilitarColisiones() {personajes.forEach({unPersonaje => unPersonaje.colisionaConEnemigo(fondo.sonido())})}
+	
+	method iniciarReloj(unTiempo) {
+		
+		tiempoPartida.miTiempoTotal(unTiempo)
+		numerosEnPartida.generarDigitos(unTiempo/1000, tiempoPartida, game.at(17, 17))
+		tiempoPartida.empezar(fondo.sonido())
+	}
 
-        //entra en un loop el sonido después de haber terminado
-        sonidoAmbiente.reproducirSinParar()
-        
-        //bajar volumen sonido
-        sonidoAmbiente.bajarVolumen(0.5)
-        
-	}
-	
-	method desplazamientoPersonajes(){
-		personajes.forEach({unPersonaje => unPersonaje.desplazarse()})
-	}
-	
-	method colisiones(){
-		personajes.forEach({unPersonaje => unPersonaje.colisionaConEnemigo(self)})
-	}
-	
-	method agregarPersonajesAlJuego(){
-		personajes.forEach({unPersonaje => 
-			self.agregar(unPersonaje)
-			unPersonaje.agregar()
-		})
-	}
-	
-	method reloj(){
-		
-		const tiempo = new Tiempo(tiempoTotal = tiempoReloj, 
-			frecuencia = 1, 
-			mensajeDerrota = pantallaDerrota, 
-			escenarioAsociado = self, 
-			musicaFinal = musicaDerrota
-		)
-		
-		const posicionReloj = game.at(17, 17)
-		
-		generarNumerosVisibles.generarDigitos(tiempoReloj / 1000, tiempo, posicionReloj)
-		tiempo.empezar()
-	}
-	
-	method eliminarPersonajesDelJuego(){
-		personajes.forEach({unPersonaje => 
-			if(unPersonaje.estoyAgregado()){
-				unPersonaje.quitar()
-				self.eliminar(unPersonaje)
-			}		
-		})
-	}
-	
-	method agregar(algo) {game.addVisual(algo)}
-	
-	method eliminar(algo) {game.removeVisual(algo)}
-	
-	method cerrarPantalla() {keyboard.s().onPressDo{game.stop()}}
-	
-	method mostrarPantallaResultadoDeLaPartida(resultado, musica){
-		game.clear()
-		sonidoAmbiente.detener()
-		game.addVisual(resultado)
-		musica.reproducirAutomaticamente()
-		self.cerrarPantalla()
-	}
-	
 }
