@@ -10,7 +10,6 @@ class Juego {
 	
 	method mostrarPortada(){
 		
-		
 		self.configurarPantalla()
 		self.agregarElementoAlJuego(portada)
 		portada.cerrarPantalla()
@@ -42,7 +41,6 @@ class Juego {
 	method iniciarvideojuego(tiempo) {
 		
 		game.clear()
-		
 		opciones.sonido().reproducir()
 		portada.sonido().detener()
 		escenario.iniciar(tiempo)

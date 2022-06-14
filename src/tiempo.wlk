@@ -16,10 +16,12 @@ class Tiempo {
 	method detener() = game.removeTickEvent(self.identity().toString())
 	
 	method onTick(unSonido){
+		
 		if(self.tiempoRestante()<=0){
 			self.detener()
 			resultadoPartida.mostrarResultado(unSonido)
 		} 
+		
 		contador+=1
 	}
 	

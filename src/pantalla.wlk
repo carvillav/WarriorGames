@@ -11,11 +11,13 @@ class Pantalla {
 	method colisiona(personaje, unSonido){}
 	
 	method mostrarResultado(unSonido){
+		
 		game.clear()
 		unSonido.detener()
 		game.addVisual(self)
 		sonido.reproducirAutomaticamente()
 		sonido.reproducirSinParar()
+		console.println('Videojuego finalizado...')
 		self.cerrarPantalla()
 	}
 }
