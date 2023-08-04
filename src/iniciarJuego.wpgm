@@ -4,7 +4,7 @@ import instancia.*
 program iniciarJuego {
 
 	console.println('Iniciando videojuego...')
-	warriorsGame.mostrarPortada()
+	const inciar = new InstanciarWarriorGame()
 	game.start()
 
 }
