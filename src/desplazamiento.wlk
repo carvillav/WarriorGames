@@ -55,7 +55,7 @@ class DesplazarAbajo inherits Desplazamiento{
 	}
 }
 
-class DesplazarAutomaticamentaVertical inherits Desplazamiento{
+class DesplazarAutomaticamenteVertical inherits Desplazamiento{
 	
 	const property posicionFija
 	
