@@ -48,9 +48,9 @@ const villanoJefe = new VillanoPrincipal(poder = 12500, miDesplazamiento = despl
 const personajesVideojuego = [personajePrincipal, villanoEnanoHechicero, villanoBasilisco, villanoEsqueleto, villanoJefe, villanoLadronZombie]
 
 const tiempo = new Tiempo(frecuencia = 1, resultadoPartida = pantallaDerrota)
-const numerosVisibles = new GenerarNumerosVisibles()
+//const numerosVisibles = new GenerarNumerosVisibles()
 const escenarioVideojuego = new Escenario(fondo = pantallaEscenario, personajes = personajesVideojuego, tiempoPartida = tiempo, 
-	numerosEnPartida = numerosVisibles
+	numerosEnPartida = new GenerarNumerosVisibles() //numerosVisibles
 )
 
 const warriorsGame = new Juego(portada = pantallaInicial, titulo = "Warriors Game", opciones = pantallaOpciones, 
